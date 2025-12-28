@@ -51,3 +51,7 @@ package.json
 /man/
 /share/
 /src/
+
+# Python Virtual Environments
+venv/
+.venv/

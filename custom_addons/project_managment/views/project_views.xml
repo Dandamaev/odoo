@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_form_inherit_university" model="ir.ui.view">
+        <field name="name">project.project.form.university.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <!-- Добавляем вкладки в notebook -->
+            <xpath expr="//notebook" position="inside">
+
+                <!-- Паспорт проекта -->
+                <page string="Паспорт проекта" name="university_project_passport">
+                    <group>
+                        <group string="Идентификация">
+                            <field name="name" string="Название проекта (RU)"/>
+                            <field name="name_en"/>
+                            <field name="short_name"/>
+                            <field name="project_type"/>
+                            <field name="project_status"/>
+                        </group>
+                        <group string="Организация">
+                            <field name="department_name"/>
+                            <field name="project_owner_id"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                    </group>
+
+                    <group string="Ключевые ссылки" col="2">
+                        <field name="link_repo"/>
+                        <field name="link_docs"/>
+                        <field name="link_design"/>
+                        <field name="link_chat"/>
+                        <field name="link_meeting"/>
+                    </group>
+                </page>
+
+                <!-- Команда -->
+                <page string="Команда" name="university_project_team">
+                    <group>
+                        <field name="member_ids" context="{'default_project_id': id}">
+                            <list editable="bottom">
+                                <field name="user_id"/>
+                                <field name="role_id"/>
+                            </list>
+                            <form>
+                                <group>
+                                    <field name="project_id" readonly="1"/>
+                                    <field name="user_id"/>
+                                    <field name="role_id"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
