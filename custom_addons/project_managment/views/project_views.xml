@@ -6,6 +6,23 @@
         <field name="inherit_id" ref="project.edit_project"/>
         <field name="arch" type="xml">
 
+            <!-- Скрываем стандартные поля -->
+            <xpath expr="//group[field[@name='label_tasks']]" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='tag_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_start']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
             <!-- Добавляем вкладки в notebook -->
             <xpath expr="//notebook" position="inside">
 
@@ -51,6 +68,28 @@
                                     <field name="role_id"/>
                                 </group>
                             </form>
+                        </field>
+                    </group>
+                </page>
+
+                <!-- Вложения -->
+                <page string="Вложения" name="university_project_documents">
+                    <group>
+                        <field name="document_ids" context="{'default_project_id': id}">
+                            
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="file_data" filename="file_name"/> 
+                            </list>
+                            
+                            <form>
+                                <group>
+                                    <field name="project_id" readonly="1"/>
+                                    <field name="name"/>
+                                    <field name="file_data" filename="file_name" widget="binary"/>
+                                </group>
+                            </form>
+                            
                         </field>
                     </group>
                 </page>

@@ -67,6 +67,14 @@ class ProjectProject(models.Model):
         copy=True,
     )
 
+    #Вложения
+    document_ids = fields.One2many(
+        "university.project.document",
+        "project_id",
+        string="Project documents",
+        copy=True,
+    )
+
     member_user_ids = fields.Many2many(
         "res.users",
         compute="_compute_member_user_ids",
@@ -92,3 +100,4 @@ class ProjectProject(models.Model):
                     "role_id": role.id if role else False,
                 })
         return projects
+
