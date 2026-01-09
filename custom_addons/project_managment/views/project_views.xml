@@ -36,7 +36,8 @@
                             <field name="user_id" string="Менеджер проекта"/>
                             <field name="project_type" options="{'no_create': True}"/>
                             <field name="project_status"/>
-                            <field name="tag_ids" widget="many2many_tags" options="{'no_create': True, 'color_field': 'color'}"/>
+                            <field name="partner_id" string="Заказчик"/>
+                            <field name="tag_ids" string="Ключевые слова" widget="many2many_tags" options="{'no_create': True, 'color_field': 'color'}"/>
                         </group>
                         <group string="Даты">
                             <field name="date_start"/>
@@ -44,12 +45,25 @@
                         </group>
                     </group>
 
-                    <group string="Ключевые ссылки" col="2">
+                    <group string="Ресурсы" col="2">
                         <field name="link_repo"/>
                         <field name="link_docs"/>
                         <field name="link_design"/>
                         <field name="link_chat"/>
                         <field name="link_meeting"/>
+                        <field name="link_ids" context="{'default_project_id': id}">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="url"/>
+                            </list>
+                            <form>
+                                <group>
+                                    <field name="project_id" readonly="1"/>
+                                    <field name="name"/>
+                                    <field name="url"/>
+                                </group>
+                            </form>
+                        </field>
                     </group>
                 </page>
 

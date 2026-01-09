@@ -58,6 +58,14 @@ class ProjectProject(models.Model):
     link_chat = fields.Char(string="URL чата / канала")
     link_meeting = fields.Char(string="URL встречи")
 
+    # Дополнительные ссылки
+    link_ids = fields.One2many(
+        "university.project.link",
+        "project_id",
+        string="Дополнительные ссылки",
+        copy=True,
+    )
+
     # Команда
     member_ids = fields.One2many(
         "university.project.member",
