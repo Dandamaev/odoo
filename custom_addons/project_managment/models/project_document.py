@@ -9,8 +9,8 @@ class UniversityProjectDocument(models.Model):
     name = fields.Char(string="Description", required=True)
     
     # КЛЮЧЕВОЕ ПОЛЕ: для загрузки и хранения самого файла
-    file_data = fields.Binary(string="File", required=True)
-    file_name = fields.Char(string="Filename") # для хранения имени файла
+    file_data = fields.Binary(string="Файл", required=True)
+    file_name = fields.Char(string="Название файла") # для хранения имени файла
     
     # СВЯЗЬ: Many2one, которая связывает вложение с конкретным проектом
     project_id = fields.Many2one(
