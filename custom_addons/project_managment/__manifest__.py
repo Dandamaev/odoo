@@ -16,8 +16,12 @@
         "security/security.xml",
         "security/ir.model.access.csv",
 
+        # Data
+        "data/project_role_data.xml",
+
         # Views
         "views/project_views.xml",
+        #'views/project_actions.xml',
     ],
     "application": True,
     "installable": True,

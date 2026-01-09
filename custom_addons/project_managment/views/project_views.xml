@@ -4,6 +4,7 @@
         <field name="name">project.project.form.university.inherit</field>
         <field name="model">project.project</field>
         <field name="inherit_id" ref="project.edit_project"/>
+        <field name="priority">10</field>
         <field name="arch" type="xml">
 
             <!-- Скрываем стандартные поля -->
@@ -24,23 +25,22 @@
             </xpath>
 
             <!-- Добавляем вкладки в notebook -->
-            <xpath expr="//notebook" position="inside">
+            <xpath expr="//notebook/page[1]" position="before">
 
                 <!-- Паспорт проекта -->
                 <page string="Паспорт проекта" name="university_project_passport">
                     <group>
-                        <group string="Идентификация">
+                        <group string="Базовая информация">
                             <field name="name" string="Название проекта (RU)"/>
                             <field name="name_en"/>
-                            <field name="short_name"/>
-                            <field name="project_type"/>
+                            <field name="user_id" string="Менеджер проекта"/>
+                            <field name="project_type" options="{'no_create': True}"/>
                             <field name="project_status"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'no_create': True, 'color_field': 'color'}"/>
                         </group>
-                        <group string="Организация">
-                            <field name="department_name"/>
-                            <field name="project_owner_id"/>
+                        <group string="Даты">
                             <field name="date_start"/>
-                            <field name="date_end"/>
+                            <field name="date"/>
                         </group>
                     </group>
 

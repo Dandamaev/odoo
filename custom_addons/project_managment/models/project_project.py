@@ -12,80 +12,87 @@ class ProjectProject(models.Model):
 
 
     # Паспорт (минимум для MVP)
-    name_en = fields.Char(string="Project name (EN)")
-    short_name = fields.Char(string="Short name")
+    name_en = fields.Char(string="Название проекта (EN)")
 
     project_status = fields.Selection(
         [
-            ("draft", "Draft"),
-            ("in_progress", "In progress"),
-            ("done", "Done"),
-            ("archive", "Archive"),
+            ("draft", "Черновик"),
+            ("in_progress", "В работе"),
+            ("done", "Завершено"),
+            ("archive", "Архив"),
         ],
-        string="Project status",
+        string="Статус проекта",
         default="draft",
         tracking=True,
     )
 
     project_type = fields.Selection(
         [
-            ("research", "Research (R&D)"),
-            ("contract", "Contract / Industry"),
-            ("education", "Educational"),
-            ("infrastructure", "Infrastructure"),
-            ("other", "Other"),
+            ("research", "Исследование (R&D)"),
+            ("contract", "Контракт / Промышленность"),
+            ("education", "Образовательный"),
+            ("infrastructure", "Инфраструктура"),
+            ("other", "Другое"),
         ],
-        string="Project type",
+        string="Тип проекта",
         default="research",
         tracking=True,
     )
 
-    department_name = fields.Char(string="Department / unit")
+    department_name = fields.Char(string="Название отдела / подразделения")
     project_owner_id = fields.Many2one(
         "res.users",
-        string="Project owner",
+        string="Владелец проекта",
         default=lambda self: self.env.user,
         tracking=True,
         index=True,
     )
 
-    date_start = fields.Date(string="Start date")
-    date_end = fields.Date(string="End date")
+    date_start = fields.Date(string="Дата начала")
+    date_end = fields.Date(string="Дата окончания")
 
     # Ссылки (минимальный набор)
-    link_repo = fields.Char(string="Repository URL")
-    link_docs = fields.Char(string="Docs / Drive URL")
-    link_design = fields.Char(string="Design URL")
-    link_chat = fields.Char(string="Chat / Channel URL")
-    link_meeting = fields.Char(string="Meeting URL")
+    link_repo = fields.Char(string="URL репозитория")
+    link_docs = fields.Char(string="URL документации / Drive")
+    link_design = fields.Char(string="URL дизайна")
+    link_chat = fields.Char(string="URL чата / канала")
+    link_meeting = fields.Char(string="URL встречи")
 
     # Команда
     member_ids = fields.One2many(
         "university.project.member",
         "project_id",
-        string="Project team",
-        copy=True,
-    )
-
-    #Вложения
-    document_ids = fields.One2many(
-        "university.project.document",
-        "project_id",
-        string="Project documents",
+        string="Команда проекта",
         copy=True,
     )
 
     member_user_ids = fields.Many2many(
         "res.users",
         compute="_compute_member_user_ids",
-        string="Team users",
+        string="Пользователи команды",
         store=False,
+    )
+
+    #Вложения
+    document_ids = fields.One2many(
+        "university.project.document",
+        "project_id",
+        string="Документы проекта",
+        copy=True,
     )
 
     @api.depends("member_ids.user_id")
     def _compute_member_user_ids(self):
         for project in self:
             project.member_user_ids = project.member_ids.mapped("user_id")
+
+    @api.onchange('member_ids')
+    def _onchange_member_ids(self):
+        manager_member = self.member_ids.filtered(lambda m: m.role_id.code == "project_manager")
+        if manager_member:
+            self.user_id = manager_member[0].user_id
+        else:
+            self.user_id = False
 
     @api.model_create_multi
     def create(self, vals_list):
