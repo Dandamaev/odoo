@@ -69,43 +69,24 @@
 
                 <!-- Команда -->
                 <page string="Команда" name="university_project_team">
-                    <group>
-                        <field name="member_ids" context="{'default_project_id': id}">
-                            <list editable="bottom">
-                                <field name="user_id"/>
-                                <field name="role_id"/>
-                            </list>
-                            <form>
-                                <group>
-                                    <field name="project_id" readonly="1"/>
-                                    <field name="user_id"/>
-                                    <field name="role_id"/>
-                                </group>
-                            </form>
-                        </field>
-                    </group>
+                    <field name="member_ids" context="{'default_project_id': id}">
+                        <list editable="bottom">
+                            <field name="user_id"/>
+                            <field name="role_id"/>
+                            <field name="role_code" column_invisible="True"/>
+                        </list>
+                    </field>
                 </page>
 
                 <!-- Вложения -->
-                <page string="Вложения" name="university_project_documents">
-                    <group>
-                        <field name="document_ids" context="{'default_project_id': id}">
-                            
-                            <list editable="bottom">
-                                <field name="name"/>
-                                <field name="file_data" filename="file_name"/> 
-                            </list>
-                            
-                            <form>
-                                <group>
-                                    <field name="project_id" readonly="1"/>
-                                    <field name="name"/>
-                                    <field name="file_data" filename="file_name" widget="binary"/>
-                                </group>
-                            </form>
-                            
-                        </field>
-                    </group>
+                <page string="Вложения" name="university_project_docs">
+                    <field name="document_ids">
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="file_data" widget="binary" filename="file_name"/>
+                            <field name="file_name" column_invisible="True"/>
+                        </list>
+                    </field>
                 </page>
 
             </xpath>
