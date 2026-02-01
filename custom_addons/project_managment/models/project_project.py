@@ -26,7 +26,7 @@ class Project(models.Model):
     link_meeting = fields.Char(string="Встречи")
 
     # Связи (One2many)
-    link_ids = fields.One2many("university.project.link", "project_id", string="Ссылки")
+    link_ids = fields.One2many("university.project.link", "project_id", string="Дополнительные ссылки")
     document_ids = fields.One2many("university.project.document", "project_id", string="Документы")
     member_ids = fields.One2many("university.project.member", "project_id", string="Команда")
 
